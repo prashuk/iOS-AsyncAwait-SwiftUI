@@ -10,30 +10,51 @@ import SwiftUI
 
 @MainActor
 class RecipeViewModel: ObservableObject {
-    @Published var smallImage: UIImage?
-    @Published var largeImage: UIImage?
+    @Published var image: UIImage?
     
-    func fetchRecipeImage(urlString: [String]) async {
+    func fetchRecipeImage(from recipe: Recipe) async {
         do {
-            // Get Cache Image
-            if let cachedImage = ImageCache.shared.getImage(forKey: urlString[1]) {
-                largeImage = cachedImage
-                
-                return
+            // Get cached image
+            if let cachedImageUrl = self.cachedImageUrl(recipe: recipe) {
+                if let image = ImageCache.shared.getImage(forKey: cachedImageUrl) {
+                    self.image = image
+                    return
+                }
             }
-            else {
-                smallImage = try await APIService.shared.fetchRecipeImage(urlString: urlString[0])
+            
+            // Download image and set image to cache
+            if let imageSmallUrl = recipe.photoURLSmall {
+                image = try await APIService.shared.fetchRecipeImage(urlString: imageSmallUrl)
                 
-                largeImage = try await APIService.shared.fetchRecipeImage(urlString: urlString[1])
+                // Set smallImage to cache if largeImage is nil
+                if let _ = recipe.photoURLLarge { }
+                else if let image = image {
+                    ImageCache.shared.setImage(image, forKey: imageSmallUrl)
+                }
+            }
+            
+            if let imageLargeUrl = recipe.photoURLLarge {
+                image = try await APIService.shared.fetchRecipeImage(urlString: imageLargeUrl)
                 
-                // Set Cache Image
-                if let image = largeImage {
-                    ImageCache.shared.setImage(image, forKey: urlString[1])
+                // Set largeImage to cache by default
+                if let image = image {
+                    ImageCache.shared.setImage(image, forKey: imageLargeUrl)
                 }
             }
         }
         catch {
             print(String(describing: error))
         }
+    }
+    
+    func cachedImageUrl(recipe: Recipe) -> String? {
+        if let imageLargeUrl = recipe.photoURLLarge {
+            return imageLargeUrl
+        }
+        else if let imageSmallUrl = recipe.photoURLSmall {
+            return imageSmallUrl
+        }
+        
+        return nil
     }
 }

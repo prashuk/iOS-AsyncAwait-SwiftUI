@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-class RecipesContentViewModel: ObservableObject {
+class RecipesListViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
@@ -45,5 +45,19 @@ class RecipesContentViewModel: ObservableObject {
         try? await Task.sleep(nanoseconds: 5_000_000_000)
         recipes.removeAll()
         await fetchRecipes()
+    }
+    
+    func setColumnsByOrientation(_ orientation: UIDeviceOrientation, columns: inout [GridItem]) {
+        if orientation == .landscapeLeft || orientation == .landscapeRight {
+            if columns.count == 2 {
+                columns.append(contentsOf: Array(repeating: GridItem(.flexible()), count: 2))
+            }
+        }
+        else if orientation == .portrait {
+            if columns.count == 4 {
+                columns.removeLast()
+                columns.removeLast()
+            }
+        }
     }
 }

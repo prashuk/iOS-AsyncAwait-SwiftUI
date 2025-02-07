@@ -9,64 +9,43 @@ import Foundation
 import SwiftUI
 
 struct RecipesListView: View {
-    @StateObject private var recipesViewModel = RecipesContentViewModel()
-    
-    @State var scrollDirection: Axis.Set = .vertical
+    @StateObject private var recipesListVM = RecipesListViewModel()
     @State var columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
-        if recipesViewModel.isLoading {
-            ProgressView("Fetching...")
+        if recipesListVM.isLoading {
+            ProgressView("Fetching Recipes...")
         }
-        else if let errorMessage = recipesViewModel.errorMessage {
+        else if let errorMessage = recipesListVM.errorMessage {
             Text(errorMessage)
         }
         else {
-            ScrollView(scrollDirection) {
+            ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(recipesViewModel.recipes, id: \.uuid) { recipe in
-                        RecipeView(
-                            name: recipe.name,
-                            cuisine: recipe.cuisine,
-                            photoURLSmall: recipe.photoURLSmall ?? "",
-                            photoURLLarge: recipe.photoURLLarge ?? ""
-                        )
-                        .frame(height: 175)
+                    ForEach(recipesListVM.recipes, id: \.uuid) { recipe in
+                        RecipeView(recipe: recipe)
+                            .frame(height: 175)
                     }
                 }
                 .padding()
             }
             .onAppear {
-                self.setColumnsByOrientation(UIDevice.current.orientation, columns: &columns)
+                recipesListVM.setColumnsByOrientation(UIDevice.current.orientation, columns: &columns)
             }
             .onRotate { newOrientation in
-                self.setColumnsByOrientation(newOrientation, columns: &columns)
+                recipesListVM.setColumnsByOrientation(newOrientation, columns: &columns)
             }
             .task {
-                if recipesViewModel.recipes.isEmpty {
+                if recipesListVM.recipes.isEmpty {
                     Task {
-                        await recipesViewModel.fetchRecipes()
+                        await recipesListVM.fetchRecipes()
                     }
                 }
             }
             .refreshable {
                 Task {
-                    await recipesViewModel.refreshRecipes()
+                    await recipesListVM.refreshRecipes()
                 }
-            }
-        }
-    }
-    
-    func setColumnsByOrientation(_ orientation: UIDeviceOrientation, columns: inout [GridItem]) {
-        if orientation == .landscapeLeft || orientation == .landscapeRight {
-            if columns.count == 2 {
-                columns.append(contentsOf: Array(repeating: GridItem(.flexible()), count: 2))
-            }
-        }
-        else if orientation == .portrait {
-            if columns.count == 4 {
-                columns.removeLast()
-                columns.removeLast()
             }
         }
     }

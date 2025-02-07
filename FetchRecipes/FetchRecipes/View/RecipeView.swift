@@ -8,20 +8,17 @@
 import SwiftUI
 
 struct RecipeView: View {
-    let name: String
-    let cuisine: String
-    let photoURLSmall: String
-    let photoURLLarge: String
+    let recipe: Recipe
     
     var body: some View {
         ZStack() {
             VStack() {
-                RecipeImage(photoURLSmall: photoURLSmall, photoURLLarge: photoURLLarge)
+                RecipeImage(recipe: recipe)
             }
             VStack() {
                 Spacer()
                 
-                RecipeText(name: name, cuisine: cuisine)
+                RecipeText(recipe: recipe)
                     .padding(.bottom, 25)
             }
         }
@@ -30,18 +27,13 @@ struct RecipeView: View {
 }
 
 struct RecipeImage: View {
-    let photoURLSmall: String
-    let photoURLLarge: String
+    let recipe: Recipe
     
     @StateObject private var recipeImageVM = RecipeViewModel()
     
     var body: some View {
         ZStack {
-            if let image = recipeImageVM.largeImage {
-                Image(uiImage: image)
-                    .resizable()
-            }
-            else if let image = recipeImageVM.smallImage {
+            if let image = recipeImageVM.image {
                 Image(uiImage: image)
                     .resizable()
             }
@@ -51,9 +43,9 @@ struct RecipeImage: View {
             }
         }
         .task {
-            if recipeImageVM.smallImage == nil {
+            if recipeImageVM.image == nil {
                 Task {
-                    await recipeImageVM.fetchRecipeImage(urlString: [photoURLSmall, photoURLLarge])
+                    await recipeImageVM.fetchRecipeImage(from: recipe)
                 }
             }
         }
@@ -61,17 +53,16 @@ struct RecipeImage: View {
 }
 
 struct RecipeText: View {
-    let name: String
-    let cuisine: String
+    let recipe: Recipe
     
     var body: some View {
         ZStack {
             VStack {
-                Text(name)
+                Text(recipe.name)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 16))
                 
-                Text(cuisine)
+                Text(recipe.cuisine)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 13))
             }
@@ -84,15 +75,14 @@ struct RecipeText: View {
                 startPoint: .leading,
                 endPoint: .trailing
             )
+            .opacity(0.75)
         )
     }
 }
 
 #Preview {
-    RecipeView(
-        name: "Apam Balik",
-        cuisine: "Malaysian",
-        photoURLSmall: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg",
-        photoURLLarge: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/large.jpg")
-    .frame(width: 150, height: 150)
+    let recipe = Recipe(uuid: "asdfghjkl", name: "Apam Balik", cuisine: "Malaysia", photoURLSmall: nil, photoURLLarge: nil)
+    
+    RecipeView(recipe: recipe)
+        .frame(width: 150, height: 150)
 }
