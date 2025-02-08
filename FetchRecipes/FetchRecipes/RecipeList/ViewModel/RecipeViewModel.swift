@@ -1,5 +1,5 @@
 //
-//  RecipeImageViewModel.swift
+//  RecipeViewModel.swift
 //  FetchRecipes
 //
 //  Created by Prashuk Ajmera on 2/6/25.

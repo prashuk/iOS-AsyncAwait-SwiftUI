@@ -25,7 +25,8 @@ public enum APIError: Error {
             case .noData:
                 return "Empty Data"
             case .unknown:
-                return "Something went wrong.\nError: \(self.localizedDescription)"
+                print(String(describing: self))
+                return "Something went wrong.\nError: \(String(describing: self))"
         }
     }
 }

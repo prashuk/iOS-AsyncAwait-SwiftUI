@@ -1,5 +1,5 @@
 //
-//  CardView.swift
+//  RecipeView.swift
 //  FetchRecipes
 //
 //  Created by Prashuk Ajmera on 2/6/25.
@@ -39,15 +39,10 @@ struct RecipeImage: View {
             }
             else {
                 Image(systemName: "fork.knife")
-                    .font(.largeTitle)
             }
         }
         .task {
-            if recipeImageVM.image == nil {
-                Task {
-                    await recipeImageVM.fetchRecipeImage(from: recipe)
-                }
-            }
+            await recipeImageVM.fetchRecipeImage(from: recipe)
         }
     }
 }
@@ -80,9 +75,9 @@ struct RecipeText: View {
     }
 }
 
-#Preview {
-    let recipe = Recipe(uuid: "asdfghjkl", name: "Apam Balik", cuisine: "Malaysia", photoURLSmall: nil, photoURLLarge: nil)
-    
-    RecipeView(recipe: recipe)
-        .frame(width: 150, height: 150)
-}
+//#Preview {
+//    let recipe = Recipe(uuid: "asdfghjkl", name: "Apam Balik", cuisine: "Malaysia", photoURLSmall: nil, photoURLLarge: nil)
+//    
+//    RecipeView(recipe: recipe)
+//        .frame(width: 150, height: 150)
+//}

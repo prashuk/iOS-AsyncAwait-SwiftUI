@@ -1,5 +1,5 @@
 //
-//  RecipesContentViewModel.swift
+//  RecipesListViewModel.swift
 //  FetchRecipes
 //
 //  Created by Prashuk Ajmera on 2/5/25.
@@ -38,7 +38,7 @@ class RecipesListViewModel: ObservableObject {
     }
     
     func refreshRecipes() async {
-        try? await Task.sleep(nanoseconds: 5_000_000_000)
+        try? await Task.sleep(nanoseconds: 3_000_000_000)
         recipes.removeAll()
         await fetchRecipes()
     }
