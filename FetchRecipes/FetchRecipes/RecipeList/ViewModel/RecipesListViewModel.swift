@@ -13,29 +13,25 @@ class RecipesListViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
+    
+    private let recipeServices: RecipeServiceDelegate
+    
+    init(recipeServices: RecipeServiceDelegate = RecipeService()) {
+        self.recipeServices = recipeServices
+    }
      
     func fetchRecipes() async {
         isLoading = true
         errorMessage = nil
                 
         do {
-            recipes = try await APIService.shared.fetchRecipes().recipes
+            recipes = try await self.recipeServices.fetchRecipes(with: Constant.url).recipes
+        }
+        catch let error as APIError {
+            errorMessage = error.errorDescription
         }
         catch {
-            print(String(describing: error))
-            switch error {
-                case APIError.inValidURL:
-                    errorMessage = "Invalid URL"
-                case APIError.inValidData:
-                    errorMessage = "Invalid Data"
-                case APIError.inValidServerResponse:
-                    errorMessage = "Invalid Response"
-                case APIError.noData:
-                    errorMessage = "Empty Data"
-                default:
-                    errorMessage = "Something went wrong.\nError: \(error.localizedDescription)"
-            }
-            
+            errorMessage = APIError.unknown(error).errorDescription
         }
         
         isLoading = false
