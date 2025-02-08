@@ -16,12 +16,12 @@ public enum APIError: Error {
     
     public var errorDescription: String {
         switch self {
-            case .inValidData:
-                return "Invalid URL"
             case .inValidURL:
+                return "Invalid URL"
+            case .inValidData:
                 return "Invalid Data"
             case .inValidServerResponse(let statusCode):
-                return "Invalid Response with \(statusCode)"
+                return "Invalid Response with status code \(statusCode)"
             case .noData:
                 return "Empty Data"
             case .unknown:

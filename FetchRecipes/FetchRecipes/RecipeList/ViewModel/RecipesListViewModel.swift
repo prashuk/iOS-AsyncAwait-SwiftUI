@@ -20,12 +20,14 @@ class RecipesListViewModel: ObservableObject {
         self.recipeServices = recipeServices
     }
      
-    func fetchRecipes() async {
+    func fetchRecipes(with url: String) async {
         isLoading = true
         errorMessage = nil
                 
         do {
-            recipes = try await self.recipeServices.fetchRecipes(with: Constant.url).recipes
+            recipes = try await self.recipeServices.fetchRecipes(with: url).recipes
+            
+            if recipes.count == 0 { throw APIError.noData }
         }
         catch let error as APIError {
             errorMessage = error.errorDescription
@@ -37,10 +39,10 @@ class RecipesListViewModel: ObservableObject {
         isLoading = false
     }
     
-    func refreshRecipes() async {
+    func refreshRecipes(with url: String) async {
         try? await Task.sleep(nanoseconds: 3_000_000_000)
         recipes.removeAll()
-        await fetchRecipes()
+        await fetchRecipes(with: url)
     }
     
     func setColumnsByOrientation(_ orientation: UIDeviceOrientation, columns: inout [GridItem]) {

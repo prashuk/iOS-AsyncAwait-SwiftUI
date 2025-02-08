@@ -12,6 +12,8 @@ struct RecipesListView: View {
     @StateObject private var recipesListVM = RecipesListViewModel()
     @State var columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
+    let recipeUrl = Constant.url
+    
     var body: some View {
         ScrollView {
             if recipesListVM.isLoading {
@@ -31,7 +33,7 @@ struct RecipesListView: View {
             }
         }
         .task {
-            await recipesListVM.fetchRecipes()
+            await recipesListVM.fetchRecipes(with: recipeUrl)
         }
         .onAppear {
             recipesListVM.setColumnsByOrientation(UIDevice.current.orientation, columns: &columns)
@@ -40,7 +42,7 @@ struct RecipesListView: View {
             recipesListVM.setColumnsByOrientation(newOrientation, columns: &columns)
         }
         .refreshable {
-            await recipesListVM.refreshRecipes()
+            await recipesListVM.refreshRecipes(with: recipeUrl)
         }
     }
 }
