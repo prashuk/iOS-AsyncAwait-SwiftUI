@@ -42,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		FEA74D7C2D5835220052C32D /* RecipeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModelTests.swift; sourceTree = "<group>"; };
+		FEA74D7E2D584BBE0052C32D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FEE1B46C2D543EAF00ABFA0C /* FetchRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEE1B47C2D543EB100ABFA0C /* FetchRecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchRecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEE1B5372D56DC9300ABFA0C /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -177,6 +178,7 @@
 		FEE1B54B2D56DC9300ABFA0C /* FetchRecipes */ = {
 			isa = PBXGroup;
 			children = (
+				FEA74D7E2D584BBE0052C32D /* Info.plist */,
 				FEE1B5392D56DC9300ABFA0C /* API */,
 				FEE1B53E2D56DC9300ABFA0C /* Other */,
 				FEE1B5632D56EA2300ABFA0C /* RecipeList */,
@@ -500,6 +502,7 @@
 				DEVELOPMENT_TEAM = NJVB322UA6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FetchRecipes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Recipes;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -531,6 +534,7 @@
 				DEVELOPMENT_TEAM = NJVB322UA6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FetchRecipes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Recipes;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

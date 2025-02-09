@@ -33,14 +33,14 @@ struct RecipesListView: View {
                 .padding()
             }
         }
-        .task {
-            await recipesListVM.fetchRecipes(with: recipeUrl)
-        }
         .onAppear {
             recipesListVM.setColumnsByOrientation(UIDevice.current.orientation, columns: &columns)
         }
         .onRotate { newOrientation in
             recipesListVM.setColumnsByOrientation(newOrientation, columns: &columns)
+        }
+        .task {
+            await recipesListVM.fetchRecipes(with: recipeUrl)
         }
         .refreshable {
             await recipesListVM.refreshRecipes(with: recipeUrl)

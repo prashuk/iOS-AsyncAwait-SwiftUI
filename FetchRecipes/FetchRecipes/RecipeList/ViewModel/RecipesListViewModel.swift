@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class RecipesListViewModel: ObservableObject {
     @Published var recipes: [Recipe] = []
     @Published var isLoading = false
@@ -18,8 +19,7 @@ class RecipesListViewModel: ObservableObject {
     init(recipeServices: RecipeServiceDelegate = RecipeService()) {
         self.recipeServices = recipeServices
     }
-     
-    @MainActor
+    
     func fetchRecipes(with url: String) async {
         isLoading = true
         errorMessage = nil
@@ -39,9 +39,8 @@ class RecipesListViewModel: ObservableObject {
         isLoading = false
     }
     
-    @MainActor
     func refreshRecipes(with url: String) async {
-        try? await Task.sleep(nanoseconds: 2_000_000_000)
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
         recipes.removeAll()
         await fetchRecipes(with: url)
     }

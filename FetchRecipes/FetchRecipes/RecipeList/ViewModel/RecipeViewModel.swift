@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class RecipeViewModel: ObservableObject {
     @Published var image: UIImage?
     
@@ -17,12 +18,11 @@ class RecipeViewModel: ObservableObject {
         self.recipeServices = recipeServices
     }
     
-    @MainActor
-    func fetchRecipeImage(from recipe: Recipe) async {
+    func fetchRecipeImage(from recipe: Recipe) async throws {
         do {
             // Get cached image
             if let cachedImageUrl = self.cachedImageUrl(recipe: recipe) {
-                if let image = ImageCache.shared.getImage(forKey: cachedImageUrl) {
+                if let image = await ImageCache.shared.getImage(forKey: cachedImageUrl) {
                     self.image = image
                     return
                 }
@@ -35,7 +35,7 @@ class RecipeViewModel: ObservableObject {
                 // Set smallImage to cache if largeImage is nil
                 if let _ = recipe.photoURLLarge { }
                 else if let image = image {
-                    ImageCache.shared.setImage(image, forKey: imageSmallUrl)
+                    await ImageCache.shared.setImage(image, forKey: imageSmallUrl)
                 }
             }
             
@@ -44,12 +44,12 @@ class RecipeViewModel: ObservableObject {
                 
                 // Set largeImage to cache by default
                 if let image = image {
-                    ImageCache.shared.setImage(image, forKey: imageLargeUrl)
+                    await ImageCache.shared.setImage(image, forKey: imageLargeUrl)
                 }
             }
         }
         catch {
-            print(String(describing: error))
+            throw error
         }
     }
     

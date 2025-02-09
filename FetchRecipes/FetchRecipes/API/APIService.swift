@@ -27,17 +27,12 @@ class APIService {
         }
         
         // Data
-        let decodedData: T?
         do {
-            decodedData = try JSONDecoder().decode(T.self, from: data)
+            let decodedData = try JSONDecoder().decode(T.self, from: data)
+            return decodedData
         } catch {
             throw APIError.inValidData
         }
-        
-        // Empty Data
-        guard let returnedData = decodedData else { throw APIError.noData }
-        
-        return returnedData
     }
     
     func fetchImage(urlString: String) async throws -> UIImage {

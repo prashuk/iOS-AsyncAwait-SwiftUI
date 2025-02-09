@@ -42,7 +42,11 @@ struct RecipeImage: View {
             }
         }
         .task {
-            await recipeImageVM.fetchRecipeImage(from: recipe)
+            do {
+                try await recipeImageVM.fetchRecipeImage(from: recipe)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }
