@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct RecipesListView: View {
-    @StateObject private var recipesListVM = RecipesListViewModel()
+    @ObservedObject private var recipesListVM = RecipesListViewModel()
+    
     @State var columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     let recipeUrl = Constant.url
@@ -47,6 +48,6 @@ struct RecipesListView: View {
     }
 }
 
-//#Preview {
-//    RecipesListView()
-//}
+#Preview {
+    RecipesListView()
+}

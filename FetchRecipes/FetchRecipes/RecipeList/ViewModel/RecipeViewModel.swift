@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-@MainActor
 class RecipeViewModel: ObservableObject {
     @Published var image: UIImage?
     
@@ -18,6 +17,7 @@ class RecipeViewModel: ObservableObject {
         self.recipeServices = recipeServices
     }
     
+    @MainActor
     func fetchRecipeImage(from recipe: Recipe) async {
         do {
             // Get cached image

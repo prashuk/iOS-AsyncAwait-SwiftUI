@@ -9,7 +9,7 @@ import Foundation
 
 public enum APIError: Error {
     case inValidURL
-    case inValidServerResponse(statusCode: Int)
+    case inValidResponse
     case inValidData
     case noData
     case unknown(Error)
@@ -20,8 +20,8 @@ public enum APIError: Error {
                 return "Invalid URL"
             case .inValidData:
                 return "Invalid Data"
-            case .inValidServerResponse(let statusCode):
-                return "Invalid Response with status code \(statusCode)"
+            case .inValidResponse:
+                return "Invalid Response"
             case .noData:
                 return "Empty Data"
             case .unknown:

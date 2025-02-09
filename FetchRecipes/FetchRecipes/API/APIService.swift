@@ -18,13 +18,12 @@ class APIService {
         guard let url else { throw APIError.inValidURL }
         let urlRequest = URLRequest(url: url)
         
-        // Network Call
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
         // Response
-        guard let httpResponse = response as? HTTPURLResponse else { throw APIError.noData }
-        if httpResponse.statusCode != 200 {
-            throw APIError.inValidServerResponse(statusCode: httpResponse.statusCode)
+        guard let httpResponse = response as? HTTPURLResponse,
+                (200...300).contains(httpResponse.statusCode) else {
+            throw APIError.inValidResponse
         }
         
         // Data
@@ -46,7 +45,6 @@ class APIService {
         guard let url else { throw APIError.inValidURL }
         let urlRequest = URLRequest(url: url)
         
-        // Network Call
         let (data, _) = try await URLSession.shared.data(for: urlRequest)
         
         // Data

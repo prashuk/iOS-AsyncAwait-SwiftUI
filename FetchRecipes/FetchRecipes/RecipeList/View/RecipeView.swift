@@ -29,7 +29,7 @@ struct RecipeView: View {
 struct RecipeImage: View {
     let recipe: Recipe
     
-    @StateObject private var recipeImageVM = RecipeViewModel()
+    @ObservedObject private var recipeImageVM = RecipeViewModel()
     
     var body: some View {
         ZStack {
@@ -75,9 +75,15 @@ struct RecipeText: View {
     }
 }
 
-//#Preview {
-//    let recipe = Recipe(uuid: "asdfghjkl", name: "Apam Balik", cuisine: "Malaysia", photoURLSmall: nil, photoURLLarge: nil)
-//    
-//    RecipeView(recipe: recipe)
-//        .frame(width: 150, height: 150)
-//}
+#Preview {
+    let recipe = Recipe(
+        uuid: "id",
+        name: "Apam Balik",
+        cuisine: "Malaysian",
+        photoURLSmall: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg",
+        photoURLLarge: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/large.jpg"
+    )
+    
+    RecipeView(recipe: recipe)
+        .frame(width: 150, height: 150)
+}

@@ -11,6 +11,7 @@ import UIKit
 
 class MockRecipeService: RecipeServiceDelegate  {
     var result: Recipes?
+    var image: UIImage?
     
     func fetchRecipes(with url: String) async throws -> Recipes {
         guard let result = self.result else { throw APIError.noData }
@@ -18,7 +19,8 @@ class MockRecipeService: RecipeServiceDelegate  {
     }
     
     func fetchRecipeImage(with url: String) async throws -> UIImage {
-        UIImage()
+        guard let image = self.image else { throw APIError.noData }
+        return image
     }
     
     func getRecipesFromLocal(from fileName: String) throws -> Recipes? {
