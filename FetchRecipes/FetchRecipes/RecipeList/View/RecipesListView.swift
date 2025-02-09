@@ -9,11 +9,10 @@ import Foundation
 import SwiftUI
 
 struct RecipesListView: View {
-    @ObservedObject private var recipesListVM = RecipesListViewModel()
-    
-    @State var columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
-    
     let recipeUrl = Constant.url
+    
+    @ObservedObject private var recipesListVM = RecipesListViewModel()
+    @State var columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
         ScrollView {

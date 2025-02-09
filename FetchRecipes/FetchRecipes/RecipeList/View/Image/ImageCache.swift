@@ -11,7 +11,6 @@ import SwiftUI
 
 @MainActor
 public class ImageCache {
-    // Singleton object
     static let shared = ImageCache()
     private init() {}
     
