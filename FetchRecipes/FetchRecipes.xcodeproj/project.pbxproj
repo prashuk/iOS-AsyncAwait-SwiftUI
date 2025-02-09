@@ -28,7 +28,6 @@
 		FEE1B5732D57EC8F00ABFA0C /* Recipes.json in Resources */ = {isa = PBXBuildFile; fileRef = FEE1B5702D57EC8F00ABFA0C /* Recipes.json */; };
 		FEE1B5742D57EC8F00ABFA0C /* Recipes-Empty.json in Resources */ = {isa = PBXBuildFile; fileRef = FEE1B5712D57EC8F00ABFA0C /* Recipes-Empty.json */; };
 		FEE1B5752D57EC8F00ABFA0C /* Recipes-Malformed.json in Resources */ = {isa = PBXBuildFile; fileRef = FEE1B5722D57EC8F00ABFA0C /* Recipes-Malformed.json */; };
-		FEE1B5772D58096100ABFA0C /* Recipes.json in Resources */ = {isa = PBXBuildFile; fileRef = FEE1B5762D58096100ABFA0C /* Recipes.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +65,6 @@
 		FEE1B5702D57EC8F00ABFA0C /* Recipes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Recipes.json; sourceTree = "<group>"; };
 		FEE1B5712D57EC8F00ABFA0C /* Recipes-Empty.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Recipes-Empty.json"; sourceTree = "<group>"; };
 		FEE1B5722D57EC8F00ABFA0C /* Recipes-Malformed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Recipes-Malformed.json"; sourceTree = "<group>"; };
-		FEE1B5762D58096100ABFA0C /* Recipes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Recipes.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +176,6 @@
 		FEE1B5482D56DC9300ABFA0C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				FEE1B5762D58096100ABFA0C /* Recipes.json */,
 				FEE1B5462D56DC9300ABFA0C /* RecipesListViewModel.swift */,
 				FEE1B5472D56DC9300ABFA0C /* RecipeViewModel.swift */,
 			);
@@ -325,7 +322,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEE1B54C2D56DC9300ABFA0C /* Preview Assets.xcassets in Resources */,
-				FEE1B5772D58096100ABFA0C /* Recipes.json in Resources */,
 				FEE1B54D2D56DC9300ABFA0C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
