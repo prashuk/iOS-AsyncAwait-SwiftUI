@@ -8,6 +8,7 @@ An iOS app developed with Swift, SwiftUI, AsyncAwait and Image caching.
 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
 - UI
+- Pull to refresh
 - Image to show (small image vs large image)
 - Image caching
 - MVVM
