@@ -23,7 +23,7 @@ class MockRecipeService: RecipeServiceDelegate  {
         return image
     }
     
-    func getRecipesFromLocal(from fileName: String) throws -> Recipes? {
+    func getRecipesFromResources(from fileName: String) throws -> Recipes? {
         do {
             let testBundle = Bundle(for: type(of: self))
             guard let filePath = testBundle.path(forResource: fileName, ofType: "json") else { return nil }
@@ -32,6 +32,16 @@ class MockRecipeService: RecipeServiceDelegate  {
             
             return recipeData
         } catch { }
+        
+        return nil
+    }
+    
+    func getImageFromResources(from fileName: String) -> UIImage? {
+        let bundle = Bundle.init(for: type(of: self))
+        if let image = UIImage(named: fileName, in: bundle, compatibleWith: nil) {
+            image.withRenderingMode(.alwaysOriginal)
+            return image
+        }
         
         return nil
     }

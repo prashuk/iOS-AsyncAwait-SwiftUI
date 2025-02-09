@@ -12,10 +12,11 @@ class RecipeViewModelTests: XCTestCase {
     var mockRecipeService: MockRecipeService!
     var recipeVM: RecipeViewModel!
     var recipe: Recipe!
+    var recipeNilUrl: Recipe!
     
     override func setUp() {
         mockRecipeService = MockRecipeService()
-        recipeVM = RecipeViewModel(recipeServices: mockRecipeService)
+
         recipe = Recipe(
             uuid: "id",
             name: "Apam Balik",
@@ -30,11 +31,34 @@ class RecipeViewModelTests: XCTestCase {
         recipeVM = nil
     }
     
-    func test_fetchRecipeImageValid() async {
+    @MainActor
+    func test_fetchRecipeImageValid() async throws {
+        recipeVM = RecipeViewModel(recipeServices: mockRecipeService)
+        
         mockRecipeService.image = nil
         
-        await recipeVM.fetchRecipeImage(from: recipe)
+        do {
+            try await recipeVM.fetchRecipeImage(from: recipe)
+        }
+        catch { }
         
         XCTAssertNil(recipeVM.image)
+    }
+    
+    @MainActor
+    func test_fetchRecipeImageCache() async {
+        recipeVM = RecipeViewModel(recipeServices: mockRecipeService)
+        
+        guard let imageFromResources = mockRecipeService.getImageFromResources(from: "image.jpg") else { return }
+        mockRecipeService.image = imageFromResources
+        
+        await ImageCache.shared.setImage(imageFromResources, forKey: recipe.photoURLLarge ?? "")
+        
+        do {
+            try await recipeVM.fetchRecipeImage(from: recipe)
+        }
+        catch { }
+        
+        XCTAssertNotNil(recipeVM.image)
     }
 }

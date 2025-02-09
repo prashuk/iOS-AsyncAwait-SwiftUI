@@ -15,14 +15,14 @@ class RecipesListViewModelTests: XCTestCase {
     
     override func setUp() {
         mockRecipeService = MockRecipeService()
-        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
     }
     
     @MainActor
     func test_APISuccess_ValidURL() async throws {
-        guard let recipes = try mockRecipeService.getRecipesFromLocal(from: "Recipes") else { return }
+        guard let recipes = try mockRecipeService.getRecipesFromResources(from: "Recipes") else { return }
         mockRecipeService.result = recipes
         
+        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
         await recipesListVM.fetchRecipes(with: Constant.url)
         
         XCTAssert(!recipesListVM.recipes.isEmpty)
@@ -37,6 +37,7 @@ class RecipesListViewModelTests: XCTestCase {
     func test_APIFail_ValidURL() async throws {
         mockRecipeService.result = nil
         
+        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
         await recipesListVM.fetchRecipes(with: Constant.url)
         
         XCTAssert(recipesListVM.recipes.isEmpty)
@@ -48,8 +49,9 @@ class RecipesListViewModelTests: XCTestCase {
     
     @MainActor
     func test_APIFail_MalformedURL() async throws {
-        mockRecipeService.result = try mockRecipeService.getRecipesFromLocal(from: "Recipes-Malformed")
+        mockRecipeService.result = try mockRecipeService.getRecipesFromResources(from: "Recipes-Malformed")
         
+        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
         await recipesListVM.fetchRecipes(with: Constant.malformedUrl)
                 
         XCTAssert(recipesListVM.recipes.isEmpty)
@@ -61,9 +63,10 @@ class RecipesListViewModelTests: XCTestCase {
     
     @MainActor
     func test_APIFail_EmptyURL() async throws {
-        guard let recipes = try mockRecipeService.getRecipesFromLocal(from: "Recipes-Empty") else { return }
+        guard let recipes = try mockRecipeService.getRecipesFromResources(from: "Recipes-Empty") else { return }
         mockRecipeService.result = recipes
         
+        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
         await recipesListVM.fetchRecipes(with: Constant.emptyDataUrl)
                 
         XCTAssert(recipesListVM.recipes.isEmpty)
@@ -75,9 +78,10 @@ class RecipesListViewModelTests: XCTestCase {
     
     @MainActor
     func test_APISuccess_Refresh() async throws {
-        guard let recipes = try mockRecipeService.getRecipesFromLocal(from: "Recipes") else { return }
+        guard let recipes = try mockRecipeService.getRecipesFromResources(from: "Recipes") else { return }
         mockRecipeService.result = recipes
         
+        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
         await recipesListVM.refreshRecipes(with: Constant.url)
         
         XCTAssert(!recipesListVM.recipes.isEmpty)
@@ -91,6 +95,8 @@ class RecipesListViewModelTests: XCTestCase {
     @MainActor
     func test_setColumnsByOrientation() {
         var columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 2)
+        
+        recipesListVM = RecipesListViewModel(recipeServices: mockRecipeService)
         
         recipesListVM.setColumnsByOrientation(.landscapeLeft, columns: &columns)
         XCTAssertEqual(columns.count, 4)
