@@ -26,7 +26,6 @@ Focused on the following areas:
 - Caching the large images if it is available, otherwise small image
 
 ### Weakest Part of the Project: What do you think is the weakest part of your project?
-
+- Currently, image caching is the weakest as it is storing data temporarily. If the app is terminated all the cached images are also deleted.
 
 ### Additional Information: Is there anything else we should know? Feel free to share any insights or constraints you encountered.
-
