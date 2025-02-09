@@ -4,7 +4,7 @@
 Sample project for fetching the data as recipes from the given URL and showing it on the iPhone screen.
 An iOS app developed on with Swift, SwiftUI, AsyncAwait network call and Image caching.
 
-[Video Recording](https://drive.google.com/file/d/1FHaClDlmhhQXdVIczsvDJERx4ObJJfMT/view?usp=sharing)
+[Video Recording](https://drive.google.com/file/d/1JnsCnW9Gd6CTqgR0c9J5DWqVxEbuTKm6/view?usp=sharing)
 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
 Focused on the following areas:
