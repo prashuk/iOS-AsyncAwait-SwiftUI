@@ -2,7 +2,7 @@
 
 ### Summary: Include screen shots or a video of your app highlighting its features
 Sample project for fetching the data as recipes from the given URL and showing it on the iPhone screen.
-An iOS app developed with Swift, SwiftUI, AsyncAwait network call and Image caching.
+An iOS app developed with Swift, SwiftUI, AsyncAwait and Image caching.
 
 [Video Recording](https://drive.google.com/file/d/1JnsCnW9Gd6CTqgR0c9J5DWqVxEbuTKm6/view?usp=sharing)
 
